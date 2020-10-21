@@ -30,7 +30,9 @@ public class StorageManager
     {
         this.client = S3Client.builder()
                 .region(Region.AP_SOUTHEAST_2)
-                .credentialsProvider(InstanceProfileCredentialsProvider.create())
+                .credentialsProvider(InstanceProfileCredentialsProvider.builder()
+                        .asyncCredentialUpdateEnabled(true)
+                        .build())
                 .build();
 
         try
