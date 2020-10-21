@@ -1,0 +1,4 @@
+name: StorageWriter
+version: 1.0
+main: me.jayoevans.storage.writer.StorageWriter
+author: Jay Evans

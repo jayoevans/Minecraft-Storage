@@ -18,19 +18,23 @@ public class StorageReader
         new StorageReader(serverDirectory, serverId);
     }
 
+    private static final String SERVER_DIRECTORY = "server";
+
     private final StorageManager storageManager = new StorageManager();
 
+    private final File parentDirectory;
     private final File serverDirectory;
     private final String serverId;
 
-    public StorageReader(String serverDirectory, String serverId) throws Exception
+    public StorageReader(String directory, String serverId) throws Exception
     {
-        this.serverDirectory = new File(serverDirectory);
+        this.parentDirectory = new File(directory);
+        this.serverDirectory = new File(this.parentDirectory, SERVER_DIRECTORY);
         this.serverId = serverId;
 
-        if (!this.serverDirectory.exists())
+        if (!this.parentDirectory.exists())
         {
-            this.serverDirectory.mkdirs();
+            this.parentDirectory.mkdirs();
         }
 
         System.out.println("Creating server...");
@@ -44,6 +48,10 @@ public class StorageReader
         System.out.println("Loading world...");
         this.loadWorld();
         System.out.println("Done!");
+
+        System.out.println("Loading plugins...");
+        this.loadPlugins();
+        System.out.println("Done!");
     }
 
     private void createServer() throws Exception
@@ -55,7 +63,7 @@ public class StorageReader
             throw new Exception("server.tar.gz does not exist");
         }
 
-        FileUtil.unzip(source, this.serverDirectory);
+        FileUtil.unzip(source, this.parentDirectory);
     }
 
     private void setupConfig() throws Exception
@@ -69,8 +77,36 @@ public class StorageReader
     {
         String key = this.storageManager.getKey(this.serverId);
 
-        this.storageManager.getObject(key, this.serverDirectory);
-        // TODO world object from bucket
-        // Unzip into server directory
+        try
+        {
+            File sourceFile = new File(this.serverDirectory, "world.tar.gz");
+            this.storageManager.getObject(key, sourceFile);
+
+            FileUtil.unzip(sourceFile, this.serverDirectory);
+            sourceFile.delete();
+        }
+        catch (Exception e)
+        {
+            System.out.println("No world found!");
+
+            e.printStackTrace();
+            // World does not exist
+        }
+    }
+
+    private void loadPlugins() throws Exception
+    {
+        String jar = "Storage-Writer.jar";
+        File writer = new File(jar);
+
+        if (!writer.exists())
+        {
+            throw new Exception(jar + " does not exist");
+        }
+
+        File plugins = new File(this.serverDirectory, "plugins");
+        plugins.mkdirs();
+
+        Files.copy(writer.toPath(), plugins.toPath().resolve(jar));
     }
 }
