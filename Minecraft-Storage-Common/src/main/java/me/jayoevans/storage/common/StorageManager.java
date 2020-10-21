@@ -1,5 +1,6 @@
 package me.jayoevans.storage.common;
 
+import software.amazon.awssdk.auth.credentials.InstanceProfileCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -29,6 +30,7 @@ public class StorageManager
     {
         this.client = S3Client.builder()
                 .region(Region.AP_SOUTHEAST_2)
+                .credentialsProvider(InstanceProfileCredentialsProvider.create())
                 .build();
 
         try
