@@ -80,6 +80,16 @@ public class StorageReader
 
             FileUtil.unzip(sourceFile, this.serverDirectory);
 
+            System.out.println("serverDirectory: " + serverDirectory);
+            System.out.println("serverDirectory path: " + serverDirectory.getPath());
+            System.out.println("serverDirectory absolute path: " + serverDirectory.getAbsolutePath());
+            System.out.println("serverDirectory canonical path: " + serverDirectory.getCanonicalPath());
+
+            File outputDirectory = new File(this.serverDirectory, this.serverDirectory.getPath());
+            File outputWorld = new File(outputDirectory, "world");
+
+            Files.copy(outputWorld.toPath(), this.serverDirectory.toPath());
+
             sourceFile.delete();
         }
         catch (Exception e)
