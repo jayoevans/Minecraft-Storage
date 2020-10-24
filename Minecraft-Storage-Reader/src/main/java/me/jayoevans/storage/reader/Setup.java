@@ -10,7 +10,13 @@ public class Setup
     {
         File file = new File("world.tar.gz");
 
-        FileUtil.unzip(file, new File("."));
+
+        File parent = null;
+        File file2 = new File(parent, "world");
+
+        System.out.println(file2);
+
+//        FileUtil.unzip(file);
 //        FileUtil.zip(file, new File("."), "world");
 
 //        File source = new File("server");

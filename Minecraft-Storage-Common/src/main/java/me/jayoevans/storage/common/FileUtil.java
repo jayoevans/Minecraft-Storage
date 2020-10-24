@@ -19,8 +19,6 @@ public class FileUtil
 		File tarFile = new File(outputDirectory, outputFile + ".tar");
 		File gzipFile = new File(outputDirectory, outputFile + ".tar.gz");
 
-		System.out.println("Zip " + sourceDirectory + " to " + gzipFile);
-
 		try (TarArchiveOutputStream output = new TarArchiveOutputStream(new FileOutputStream(tarFile)))
 		{
 			Files.walk(sourceDirectory.toPath()).forEach(path ->
@@ -60,6 +58,11 @@ public class FileUtil
 		return gzipFile;
 	}
 
+	public static void unzip(File sourceFile) throws IOException
+	{
+		unzip(sourceFile, null);
+	}
+
 	public static void unzip(File sourceFile, File outputDirectory) throws IOException
 	{
 		System.out.println("Unzip " + sourceFile + " to " + outputDirectory);
@@ -83,7 +86,7 @@ public class FileUtil
 			{
 				File file = new File(outputDirectory, entry.getName());
 
-				System.out.println("Unzipping entry: " + entry.getFile());
+				System.out.println("Unzipping entry: " + entry.getName());
 				System.out.println("To file: " + file);
 
 				File parent = file.getParentFile();
