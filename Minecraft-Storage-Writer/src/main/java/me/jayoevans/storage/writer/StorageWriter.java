@@ -36,7 +36,7 @@ public class StorageWriter
         }
 
         File world = new File(this.serverDirectory, "world");
-        File sourceFile = FileUtil.zip(world, "world");
+        File sourceFile = FileUtil.zip(world, this.serverDirectory, "world");
 
         String key = this.storageManager.getKey(this.serverId);
         this.storageManager.putObject(key, sourceFile);

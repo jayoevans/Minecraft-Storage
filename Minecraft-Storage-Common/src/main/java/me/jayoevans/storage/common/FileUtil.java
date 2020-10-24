@@ -14,10 +14,10 @@ public class FileUtil
 {
 	private static final int BUFFER = 1024;
 
-	public static File zip(File sourceDirectory, String outputFile) throws IOException
+	public static File zip(File sourceDirectory, File outputDirectory, String outputFile) throws IOException
 	{
-		File tarFile = new File(outputFile + ".tar");
-		File gzipFile = new File(outputFile + ".tar.gz");
+		File tarFile = new File(outputDirectory, outputFile + ".tar");
+		File gzipFile = new File(outputDirectory, outputFile + ".tar.gz");
 
 		try (TarArchiveOutputStream output = new TarArchiveOutputStream(new FileOutputStream(tarFile)))
 		{
