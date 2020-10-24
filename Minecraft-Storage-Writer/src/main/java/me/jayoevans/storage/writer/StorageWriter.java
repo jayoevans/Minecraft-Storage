@@ -41,6 +41,7 @@ public class StorageWriter
         String key = this.storageManager.getKey(this.serverId);
         this.storageManager.putObject(key, sourceFile);
 
-        sourceFile.delete();
+//        sourceFile.delete();
+        System.out.println("Done!");
     }
 }

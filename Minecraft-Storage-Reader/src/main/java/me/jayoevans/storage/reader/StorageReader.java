@@ -48,10 +48,6 @@ public class StorageReader
         System.out.println("Loading world...");
         this.loadWorld();
         System.out.println("Done!");
-
-        System.out.println("Loading plugins...");
-        this.loadPlugins();
-        System.out.println("Done!");
     }
 
     private void createServer() throws Exception
@@ -83,7 +79,7 @@ public class StorageReader
             this.storageManager.getObject(key, sourceFile);
 
             FileUtil.unzip(sourceFile, this.serverDirectory);
-            sourceFile.delete();
+//            sourceFile.delete();
         }
         catch (Exception e)
         {
@@ -92,21 +88,5 @@ public class StorageReader
             e.printStackTrace();
             // World does not exist
         }
-    }
-
-    private void loadPlugins() throws Exception
-    {
-        String jar = "Storage-Writer.jar";
-        File writer = new File(jar);
-
-        if (!writer.exists())
-        {
-            throw new Exception(jar + " does not exist");
-        }
-
-        File plugins = new File(this.serverDirectory, "plugins");
-        plugins.mkdirs();
-
-        Files.copy(writer.toPath(), plugins.toPath().resolve(jar));
     }
 }
