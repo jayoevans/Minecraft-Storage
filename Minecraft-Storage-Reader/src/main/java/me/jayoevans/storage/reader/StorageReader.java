@@ -69,7 +69,7 @@ public class StorageReader
         Files.write(config.toPath(), this.serverId.getBytes());
     }
 
-    private void loadWorld() throws Exception
+    private void loadWorld()
     {
         String key = this.storageManager.getKey(this.serverId);
 
@@ -78,16 +78,12 @@ public class StorageReader
             File sourceFile = new File(this.serverDirectory, "world.tar.gz");
             this.storageManager.getObject(key, sourceFile);
 
-            System.out.println("Unzipped to " + sourceFile);
             FileUtil.unzip(sourceFile, new File("."));
-//            sourceFile.delete();
+            sourceFile.delete();
         }
         catch (Exception e)
         {
             System.out.println("No world found!");
-
-            e.printStackTrace();
-            // World does not exist
         }
     }
 }

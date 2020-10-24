@@ -8,18 +8,7 @@ public class Setup
 {
     public static void main(String[] args) throws Exception
     {
-        File file = new File("world.tar.gz");
-
-        FileUtil.zip(file, new File("."), "world");
-
-//        File file = new File("world.tar.gz");
-
-//        FileUtil.unzip(file, new File("."));
-
-        /*
         File source = new File("server");
-
-        FileUtil.zip(source, "dist" + File.separator + "server");
-        */
+        FileUtil.zip(source, new File("dist"), "server");
     }
 }

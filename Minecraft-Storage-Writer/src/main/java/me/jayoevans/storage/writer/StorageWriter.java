@@ -37,12 +37,11 @@ public class StorageWriter
 
         File world = new File(this.serverDirectory, "world");
         File sourceFile = FileUtil.zip(world, this.serverDirectory, "world");
-        System.out.println("Zipped to " + sourceFile);
 
         String key = this.storageManager.getKey(this.serverId);
         this.storageManager.putObject(key, sourceFile);
 
-//        sourceFile.delete();
+        sourceFile.delete();
         System.out.println("Done!");
     }
 }
