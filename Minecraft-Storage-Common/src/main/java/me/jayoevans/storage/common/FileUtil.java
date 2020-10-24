@@ -30,7 +30,7 @@ public class FileUtil
 					return;
 				}
 
-				TarArchiveEntry entry = new TarArchiveEntry(file, file.getPath());
+				TarArchiveEntry entry = new TarArchiveEntry(file, file.getName());
 
 				System.out.println("Zipping entry: " + entry.getFile());
 
