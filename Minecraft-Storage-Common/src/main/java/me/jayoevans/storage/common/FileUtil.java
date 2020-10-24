@@ -12,8 +12,6 @@ import java.nio.file.Files;
 
 public class FileUtil
 {
-	private static final int BUFFER = 1024;
-
 	public static File zip(File sourceDirectory, File outputDirectory, String outputFile) throws IOException
 	{
 		File tarFile = new File(outputDirectory, outputFile + ".tar");
@@ -31,8 +29,6 @@ public class FileUtil
 				}
 
 				TarArchiveEntry entry = new TarArchiveEntry(file, file.getPath());
-
-				System.out.println("Zipping entry: " + entry.getFile());
 
 				try (FileInputStream input = new FileInputStream(file))
 				{
@@ -65,8 +61,6 @@ public class FileUtil
 
 	public static void unzip(File sourceFile, File outputDirectory) throws IOException
 	{
-		System.out.println("Unzip " + sourceFile + " to " + outputDirectory);
-
 		String path = sourceFile.getPath();
 		File tarFile = new File(path.substring(0, path.length() - 3));
 
@@ -84,15 +78,7 @@ public class FileUtil
 
 			while ((entry = input.getNextTarEntry()) != null)
 			{
-				File file = outputDirectory != null ? new File(outputDirectory, entry.getName()) : new File(entry.getName());
-
-				File p = null;
-				System.out.println("File null parent: " + new File(p, entry.getName()));
-				System.out.println("File no parent: " + new File(entry.getName()));
-				System.out.println("File output parent: " + new File(outputDirectory, entry.getName()));
-
-				System.out.println("Unzipping entry: " + entry.getName());
-				System.out.println("To file: " + file);
+				File file = new File(outputDirectory, entry.getName());
 
 				File parent = file.getParentFile();
 				Files.createDirectories(parent.toPath());
