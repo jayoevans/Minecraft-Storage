@@ -78,7 +78,7 @@ public class StorageReader
             File sourceFile = new File(this.serverDirectory, "world.tar.gz");
             this.storageManager.getObject(key, sourceFile);
 
-            FileUtil.unzip(sourceFile);
+            FileUtil.unzip(sourceFile, new File(File.separator));
             sourceFile.delete();
         }
         catch (Exception e)
