@@ -30,18 +30,6 @@ public class FileUtil
 					return;
 				}
 
-				try
-				{
-					System.out.println("file: " + file);
-					System.out.println("getPath: " + file.getPath());
-					System.out.println("getAbsolutePath: " + file.getAbsolutePath());
-					System.out.println("getCanonicalPath: " + file.getCanonicalPath());
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-
 				TarArchiveEntry entry = new TarArchiveEntry(file, file.getPath());
 
 				System.out.println("Zipping entry: " + entry.getFile());
@@ -96,7 +84,12 @@ public class FileUtil
 
 			while ((entry = input.getNextTarEntry()) != null)
 			{
-				File file = new File(outputDirectory, entry.getName());
+				File file = outputDirectory != null ? new File(outputDirectory, entry.getName()) : new File(entry.getName());
+
+				File p = null;
+				System.out.println("File null parent: " + new File(p, entry.getName()));
+				System.out.println("File no parent: " + new File(entry.getName()));
+				System.out.println("File output parent: " + new File(outputDirectory, entry.getName()));
 
 				System.out.println("Unzipping entry: " + entry.getName());
 				System.out.println("To file: " + file);
